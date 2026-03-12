@@ -44,9 +44,12 @@ scheduler_events = {
     "daily": [
         "nelito_finance.api.scheduled_jobs.daily_billing_sync",
     ],
-    "yearly": [
-        "nelito_finance.api.scheduled_jobs.yearly_amc_renewal",
-    ],
+    "cron": {
+        # Run AMC renewal check on the 1st of each month at 2 AM
+        "0 2 1 * *": [
+            "nelito_finance.api.scheduled_jobs.yearly_amc_renewal",
+        ],
+    },
 }
 
 # Fixtures
@@ -60,7 +63,7 @@ fixtures = [
 
 # App Includes
 # ---------------------------------------------------------------------------
-app_include_js = "/assets/nelito_finance/js/project_custom.js"
+app_include_js = ["/assets/nelito_finance/js/project_custom.js"]
 
 # Override whitelisted methods
 # ---------------------------------------------------------------------------

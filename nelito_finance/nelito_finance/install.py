@@ -2,10 +2,39 @@ import frappe
 from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 
 
+SERVICE_ITEMS = {
+    "SVC-LICENSE": "License Services",
+    "SVC-IMPLEMENTATION": "Implementation Services",
+    "SVC-AMC": "AMC Services",
+    "SVC-TM": "Time & Material Services",
+    "SVC-RECURRING": "Recurring Services",
+    "SVC-TRAVEL": "Travel & Onsite",
+    "SVC-OTHER": "Other Services",
+}
+
+
 def after_install():
-    """Create all 23 custom fields required by Nelito Finance."""
+    """Create custom fields and service items required by Nelito Finance."""
     create_custom_fields(get_custom_fields(), update=True)
-    frappe.msgprint("Nelito Finance: Custom fields created successfully.")
+    create_service_items()
+    print("Nelito Finance: Custom fields and service items created successfully.")
+
+
+def create_service_items():
+    """Create SVC-* service items if they do not already exist."""
+    for item_code, item_name in SERVICE_ITEMS.items():
+        if frappe.db.exists("Item", item_code):
+            continue
+
+        item = frappe.new_doc("Item")
+        item.item_code = item_code
+        item.item_name = item_name
+        item.item_group = "Services"
+        item.is_stock_item = 0
+        item.include_item_in_manufacturing = 0
+        item.flags.ignore_permissions = True
+        item.flags.ignore_mandatory = True
+        item.insert()
 
 
 def get_custom_fields():

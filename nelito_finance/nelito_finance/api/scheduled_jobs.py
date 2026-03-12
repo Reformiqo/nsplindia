@@ -24,7 +24,8 @@ def daily_billing_sync():
         line_value = frappe.db.get_value("Project", task_data.project, "custom_line_value") or 0
         new_amount = line_value * (task_data.custom_billing_percentage / 100)
 
-        frappe.db.set_value("Task", task_data.name, "custom_billing_amount", new_amount)
+        frappe.db.set_value("Task", task_data.name, "custom_billing_amount", new_amount,
+                           update_modified=False)
 
     frappe.logger().info(f"Daily billing sync: updated {len(tasks)} tasks")
 

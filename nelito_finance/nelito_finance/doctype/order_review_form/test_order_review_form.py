@@ -39,6 +39,9 @@ class TestOrderReviewForm(IntegrationTestCase):
     def test_milestone_split_validation(self):
         """Milestone split must sum to 100."""
         orf_item = frappe.new_doc("ORF Item")
+        orf_item.parenttype = "Order Review Form"
+        orf_item.parent = "TEST-ORF-0001"
+        orf_item.parentfield = "items"
         orf_item.revenue_category = "Implementation"
         orf_item.item_description = "Test"
         orf_item.qty = 1
