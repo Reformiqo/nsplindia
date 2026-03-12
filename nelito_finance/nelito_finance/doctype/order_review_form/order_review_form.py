@@ -2,6 +2,8 @@ import frappe
 from frappe import _
 from frappe.model.document import Document
 
+from nelito_finance.api.utils import get_service_item
+
 
 class OrderReviewForm(Document):
     def validate(self):
@@ -41,7 +43,7 @@ class OrderReviewForm(Document):
 
         for item in self.items:
             so.append("items", {
-                "item_code": item.item_code or self.get_service_item(item.revenue_category),
+                "item_code": item.item_code or get_service_item(item.revenue_category),
                 "item_name": item.item_description,
                 "description": item.item_description,
                 "qty": item.qty,
@@ -102,16 +104,3 @@ class OrderReviewForm(Document):
             task.flags.ignore_permissions = True
             task.insert()
 
-    @staticmethod
-    def get_service_item(revenue_category):
-        """Map revenue category to standard service item code."""
-        mapping = {
-            "License": "SVC-LICENSE",
-            "Implementation": "SVC-IMPLEMENTATION",
-            "AMC": "SVC-AMC",
-            "T&M": "SVC-TM",
-            "Recurring": "SVC-RECURRING",
-            "Travel": "SVC-TRAVEL",
-            "Other": "SVC-OTHER",
-        }
-        return mapping.get(revenue_category, "SVC-OTHER")

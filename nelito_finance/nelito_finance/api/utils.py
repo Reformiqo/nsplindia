@@ -3,6 +3,28 @@ from frappe import _
 
 MAX_PROJECT_DEPTH = 10
 
+REVENUE_CATEGORY_ITEM_MAP = {
+    "License": "SVC-LICENSE",
+    "Implementation": "SVC-IMPLEMENTATION",
+    "AMC": "SVC-AMC",
+    "T&M": "SVC-TM",
+    "Recurring": "SVC-RECURRING",
+    "Travel": "SVC-TRAVEL",
+    "Other": "SVC-OTHER",
+}
+
+
+def get_service_item(revenue_category):
+    """Map revenue category to standard service item code.
+
+    Args:
+        revenue_category: One of License, Implementation, AMC, T&M, Recurring, Travel, Other
+
+    Returns:
+        Service item code string (e.g. SVC-LICENSE)
+    """
+    return REVENUE_CATEGORY_ITEM_MAP.get(revenue_category, "SVC-OTHER")
+
 
 def get_customer_for_project(project, _depth=0):
     """Resolve customer for a project via Sales Order linkage.

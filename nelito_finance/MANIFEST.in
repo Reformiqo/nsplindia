@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include nelito_finance *.css
+recursive-include nelito_finance *.csv
+recursive-include nelito_finance *.html
+recursive-include nelito_finance *.ico
+recursive-include nelito_finance *.js
+recursive-include nelito_finance *.json
+recursive-include nelito_finance *.md
+recursive-include nelito_finance *.png
+recursive-include nelito_finance *.py
+recursive-include nelito_finance *.svg
+recursive-include nelito_finance *.txt
+recursive-exclude nelito_finance *.pyc

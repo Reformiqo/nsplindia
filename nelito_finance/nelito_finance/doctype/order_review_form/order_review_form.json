@@ -159,7 +159,7 @@
     "modified_by": "Administrator",
     "module": "Nelito Finance",
     "name": "Order Review Form",
-    "naming_rule": "Expression",
+    "naming_rule": "Expression (old style)",
     "owner": "Administrator",
     "permissions": [
         {

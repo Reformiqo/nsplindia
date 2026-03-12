@@ -1,7 +1,7 @@
 import frappe
 from frappe import _
 
-from nelito_finance.api.utils import get_customer_for_project
+from nelito_finance.api.utils import get_customer_for_project, get_service_item
 
 
 def on_task_validate(doc, method):
@@ -43,7 +43,7 @@ def create_milestone_invoice(task):
     si.custom_master_contract_id = project.custom_master_contract_id
     si.custom_linked_milestone_task = task.name
 
-    item_code = _get_service_item(project.custom_revenue_category)
+    item_code = get_service_item(project.custom_revenue_category)
     si.append("items", {
         "item_code": item_code,
         "item_name": task.subject,
@@ -95,15 +95,3 @@ def update_warranty_on_completion(task):
         project.db_set("custom_warranty_end", warranty_end, update_modified=False)
 
 
-def _get_service_item(revenue_category):
-    """Map revenue category to service item code."""
-    mapping = {
-        "License": "SVC-LICENSE",
-        "Implementation": "SVC-IMPLEMENTATION",
-        "AMC": "SVC-AMC",
-        "T&M": "SVC-TM",
-        "Recurring": "SVC-RECURRING",
-        "Travel": "SVC-TRAVEL",
-        "Other": "SVC-OTHER",
-    }
-    return mapping.get(revenue_category, "SVC-OTHER")
