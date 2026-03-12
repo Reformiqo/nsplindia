@@ -1,0 +1,128 @@
+{
+    "charts": [],
+    "content": "[{\"id\":\"shortcut_section\",\"type\":\"header\",\"data\":{\"text\":\"Shortcuts\",\"col\":12}},{\"id\":\"shortcut_orf\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Order Review Form\",\"col\":4}},{\"id\":\"shortcut_project\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Project\",\"col\":4}},{\"id\":\"shortcut_task\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Task\",\"col\":4}},{\"id\":\"report_section\",\"type\":\"header\",\"data\":{\"text\":\"Reports\",\"col\":12}},{\"id\":\"shortcut_contract_overview\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Contract Overview\",\"col\":6}},{\"id\":\"shortcut_milestone_tracker\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Milestone Billing Tracker\",\"col\":6}}]",
+    "creation": "2026-03-12 00:00:00.000000",
+    "doctype": "Workspace",
+    "for_user": "",
+    "hide_custom": 0,
+    "icon": "briefcase",
+    "idx": 0,
+    "is_hidden": 0,
+    "label": "Nelito Finance",
+    "links": [
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Order Review Form",
+            "link_count": 0,
+            "link_to": "Order Review Form",
+            "link_type": "DocType",
+            "onboard": 1,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Project",
+            "link_count": 0,
+            "link_to": "Project",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Task",
+            "link_count": 0,
+            "link_to": "Task",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Sales Order",
+            "link_count": 0,
+            "link_to": "Sales Order",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Sales Invoice",
+            "link_count": 0,
+            "link_to": "Sales Invoice",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 1,
+            "label": "Contract Overview",
+            "link_count": 0,
+            "link_to": "Contract Overview",
+            "link_type": "Report",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 1,
+            "label": "Milestone Billing Tracker",
+            "link_count": 0,
+            "link_to": "Milestone Billing Tracker",
+            "link_type": "Report",
+            "onboard": 0,
+            "type": "Link"
+        }
+    ],
+    "modified": "2026-03-12 00:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Nelito Finance",
+    "name": "Nelito Finance",
+    "owner": "Administrator",
+    "parent_page": "",
+    "public": 1,
+    "restrict_to_domain": "",
+    "roles": [],
+    "sequence_id": 25.0,
+    "shortcuts": [
+        {
+            "color": "#2490EF",
+            "doc_view": "List",
+            "label": "Order Review Form",
+            "link_to": "Order Review Form",
+            "type": "DocType"
+        },
+        {
+            "color": "#29CD42",
+            "doc_view": "List",
+            "label": "Project",
+            "link_to": "Project",
+            "type": "DocType"
+        },
+        {
+            "color": "#FF6B6B",
+            "doc_view": "List",
+            "label": "Task",
+            "link_to": "Task",
+            "type": "DocType"
+        },
+        {
+            "label": "Contract Overview",
+            "link_to": "Contract Overview",
+            "type": "Report"
+        },
+        {
+            "label": "Milestone Billing Tracker",
+            "link_to": "Milestone Billing Tracker",
+            "type": "Report"
+        }
+    ],
+    "title": "Nelito Finance"
+}

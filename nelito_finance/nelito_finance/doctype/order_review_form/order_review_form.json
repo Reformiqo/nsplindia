@@ -1,0 +1,200 @@
+{
+    "actions": [],
+    "autoname": "format:ORF-{YYYY}-{####}",
+    "creation": "2026-03-12 00:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "client_section",
+        "customer",
+        "customer_name",
+        "column_break_client",
+        "contract_date",
+        "master_contract_id",
+        "pid_format",
+        "section_break_items",
+        "items",
+        "totals_section",
+        "total_contract_value",
+        "column_break_totals",
+        "number_of_lines",
+        "section_break_links",
+        "sales_order",
+        "column_break_links",
+        "parent_project",
+        "section_break_notes",
+        "remarks",
+        "amended_from"
+    ],
+    "fields": [
+        {
+            "fieldname": "client_section",
+            "fieldtype": "Section Break",
+            "label": "Client Details"
+        },
+        {
+            "fieldname": "customer",
+            "fieldtype": "Link",
+            "label": "Customer",
+            "options": "Customer",
+            "reqd": 1,
+            "in_list_view": 1,
+            "in_standard_filter": 1
+        },
+        {
+            "fieldname": "customer_name",
+            "fieldtype": "Data",
+            "label": "Customer Name",
+            "fetch_from": "customer.customer_name",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_client",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "contract_date",
+            "fieldtype": "Date",
+            "label": "Contract Date",
+            "reqd": 1,
+            "default": "Today"
+        },
+        {
+            "fieldname": "master_contract_id",
+            "fieldtype": "Data",
+            "label": "Master Contract ID",
+            "reqd": 1,
+            "unique": 1,
+            "description": "Format: PID_{FY}_{SEQ} e.g., PID_2627_0001"
+        },
+        {
+            "fieldname": "pid_format",
+            "fieldtype": "Data",
+            "label": "PID Format Preview",
+            "read_only": 1,
+            "description": "Auto-generated PID format for sub-projects"
+        },
+        {
+            "fieldname": "section_break_items",
+            "fieldtype": "Section Break",
+            "label": "Line Items"
+        },
+        {
+            "fieldname": "items",
+            "fieldtype": "Table",
+            "label": "Items",
+            "options": "ORF Item",
+            "reqd": 1
+        },
+        {
+            "fieldname": "totals_section",
+            "fieldtype": "Section Break",
+            "label": "Totals"
+        },
+        {
+            "fieldname": "total_contract_value",
+            "fieldtype": "Currency",
+            "label": "Total Contract Value",
+            "read_only": 1,
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "column_break_totals",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "number_of_lines",
+            "fieldtype": "Int",
+            "label": "Number of Lines",
+            "read_only": 1
+        },
+        {
+            "fieldname": "section_break_links",
+            "fieldtype": "Section Break",
+            "label": "Linked Documents",
+            "collapsible": 1
+        },
+        {
+            "fieldname": "sales_order",
+            "fieldtype": "Link",
+            "label": "Sales Order",
+            "options": "Sales Order",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_links",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "parent_project",
+            "fieldtype": "Link",
+            "label": "Parent Project",
+            "options": "Project",
+            "read_only": 1
+        },
+        {
+            "fieldname": "section_break_notes",
+            "fieldtype": "Section Break",
+            "label": "Notes"
+        },
+        {
+            "fieldname": "remarks",
+            "fieldtype": "Small Text",
+            "label": "Remarks"
+        },
+        {
+            "fieldname": "amended_from",
+            "fieldtype": "Link",
+            "label": "Amended From",
+            "no_copy": 1,
+            "options": "Order Review Form",
+            "print_hide": 1,
+            "read_only": 1
+        }
+    ],
+    "index_web_pages_for_search": 0,
+    "is_submittable": 1,
+    "links": [],
+    "modified": "2026-03-12 00:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Nelito Finance",
+    "name": "Order Review Form",
+    "naming_rule": "Expression (old style)",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "submit": 1,
+            "write": 1,
+            "cancel": 1,
+            "amend": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Accounts Manager",
+            "share": 1,
+            "submit": 1,
+            "write": 1,
+            "cancel": 1,
+            "amend": 1
+        }
+    ],
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": [],
+    "title_field": "customer_name",
+    "track_changes": 1
+}
