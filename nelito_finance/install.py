@@ -32,6 +32,7 @@ def create_service_items():
         item.item_group = "Services"
         item.is_stock_item = 0
         item.include_item_in_manufacturing = 0
+        item.gst_hsn_code = "998313"
         item.flags.ignore_permissions = True
         item.flags.ignore_mandatory = True
         item.insert()
