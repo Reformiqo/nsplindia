@@ -28,8 +28,9 @@ class OrderReviewForm(Document):
         parent_project = self.create_parent_project()
         self.create_sub_projects_and_tasks(parent_project)
 
-        self.db_set("sales_order", so.name)
-        self.db_set("parent_project", parent_project.name)
+        # Set on self so the framework persists them in the final save
+        self.sales_order = so.name
+        self.parent_project = parent_project.name
 
     def create_sales_order(self):
         """Create a Sales Order from ORF line items."""

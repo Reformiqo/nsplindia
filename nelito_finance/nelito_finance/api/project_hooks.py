@@ -29,7 +29,12 @@ def recalculate_parent_total(project_name, doc=None):
     if doc:
         doc.custom_total_contract_value = total
     else:
-        frappe.db.set_value("Project", project_name, "custom_total_contract_value", total)
+        # Use update_modified=False to prevent triggering on_update cascade
+        frappe.db.set_value(
+            "Project", project_name,
+            "custom_total_contract_value", total,
+            update_modified=False,
+        )
 
 
 def update_parent_contract_value(parent_project_name):

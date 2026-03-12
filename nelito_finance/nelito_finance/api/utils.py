@@ -1,6 +1,44 @@
 import frappe
 from frappe import _
 
+MAX_PROJECT_DEPTH = 10
+
+
+def get_customer_for_project(project, _depth=0):
+    """Resolve customer for a project via Sales Order linkage.
+
+    Walks up the parent project chain until a linked Sales Order is found.
+
+    Args:
+        project: Project doc or name
+        _depth: Internal recursion counter (do not pass manually)
+
+    Returns:
+        Customer name string, or None
+    """
+    if _depth > MAX_PROJECT_DEPTH:
+        frappe.log_error(
+            message=f"Max depth exceeded resolving customer for project {project.name}",
+            title="Customer Lookup Error",
+        )
+        return None
+
+    if isinstance(project, str):
+        project = frappe.get_doc("Project", project)
+
+    so = frappe.db.get_value(
+        "Sales Order Item",
+        {"custom_linked_project": project.name},
+        "parent",
+    )
+    if so:
+        return frappe.db.get_value("Sales Order", so, "customer")
+
+    if project.custom_parent_project:
+        return get_customer_for_project(project.custom_parent_project, _depth + 1)
+
+    return None
+
 
 @frappe.whitelist()
 def get_sub_projects(master_contract_id):

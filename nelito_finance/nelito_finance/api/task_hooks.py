@@ -1,6 +1,8 @@
 import frappe
 from frappe import _
 
+from nelito_finance.api.utils import get_customer_for_project
+
 
 def on_task_validate(doc, method):
     """Recalculate billing amount from project line_value × billing_%."""
@@ -55,8 +57,10 @@ def create_milestone_invoice(task):
     si.insert()
 
     # Link the invoice back to the task
-    task.db_set("custom_linked_invoice", si.name)
-    task.db_set("custom_billing_status", "Fully Invoiced")
+    task.custom_linked_invoice = si.name
+    task.custom_billing_status = "Fully Invoiced"
+    task.db_set("custom_linked_invoice", si.name, update_modified=False)
+    task.db_set("custom_billing_status", "Fully Invoiced", update_modified=False)
 
     frappe.msgprint(
         _("Sales Invoice {0} created for milestone: {1}").format(
@@ -84,27 +88,11 @@ def update_warranty_on_completion(task):
 
     if incomplete == 0 and not project.custom_warranty_start:
         today = frappe.utils.today()
-        project.db_set("custom_warranty_start", today)
-        project.db_set("custom_warranty_end", frappe.utils.add_months(today, 12))
-
-
-def get_customer_for_project(project):
-    """Resolve customer for a project via Sales Order linkage."""
-    # Check if project has a linked Sales Order
-    so = frappe.db.get_value(
-        "Sales Order Item",
-        {"custom_linked_project": project.name},
-        "parent",
-    )
-    if so:
-        return frappe.db.get_value("Sales Order", so, "customer")
-
-    # Fallback: check parent project
-    if project.custom_parent_project:
-        parent = frappe.get_doc("Project", project.custom_parent_project)
-        return get_customer_for_project(parent)
-
-    return None
+        warranty_end = frappe.utils.add_months(today, 12)
+        project.custom_warranty_start = today
+        project.custom_warranty_end = warranty_end
+        project.db_set("custom_warranty_start", today, update_modified=False)
+        project.db_set("custom_warranty_end", warranty_end, update_modified=False)
 
 
 def _get_service_item(revenue_category):
