@@ -1,3 +1,8 @@
+// Nelito Finance — Task & Project form customizations
+// v16 compatible: no bare global functions (JS loaded as IIFEs)
+
+frappe.provide("frappe.nelito_finance");
+
 // Task: "Create Invoice" button and billing field toggle
 frappe.ui.form.on("Task", {
     refresh: function (frm) {
@@ -66,7 +71,7 @@ frappe.ui.form.on("Project", {
                     args: { master_contract_id: frm.doc.custom_master_contract_id },
                     callback: function (r) {
                         if (r.message) {
-                            show_contract_summary_dialog(r.message);
+                            frappe.nelito_finance.show_contract_summary(r.message);
                         }
                     },
                 });
@@ -81,7 +86,7 @@ frappe.ui.form.on("Project", {
                     args: { project: frm.doc.name },
                     callback: function (r) {
                         if (r.message) {
-                            show_milestone_summary_dialog(frm.doc.name, r.message);
+                            frappe.nelito_finance.show_milestone_summary(frm.doc.name, r.message);
                         }
                     },
                 });
@@ -90,13 +95,13 @@ frappe.ui.form.on("Project", {
     },
 });
 
-function show_contract_summary_dialog(summary) {
+frappe.nelito_finance.show_contract_summary = function (summary) {
     let rows = "";
     (summary.sub_projects || []).forEach(function (p) {
         rows += "<tr>"
             + "<td>" + p.name + "</td>"
             + "<td>" + (p.custom_revenue_category || "") + "</td>"
-            + "<td class='text-right'>" + format_currency(p.custom_line_value || 0) + "</td>"
+            + "<td class='text-right'>" + frappe.format(p.custom_line_value || 0, { fieldtype: "Currency" }) + "</td>"
             + "<td>" + (p.status || "") + "</td>"
             + "</tr>";
     });
@@ -112,30 +117,30 @@ function show_contract_summary_dialog(summary) {
         + "<tbody>" + rows + "</tbody>"
         + "<tfoot><tr>"
         + "<td colspan='2'><strong>" + __("Total") + "</strong></td>"
-        + "<td class='text-right'><strong>" + format_currency(summary.total_value || 0) + "</strong></td>"
+        + "<td class='text-right'><strong>" + frappe.format(summary.total_value || 0, { fieldtype: "Currency" }) + "</strong></td>"
         + "<td></td>"
         + "</tr><tr>"
         + "<td colspan='2'>" + __("Billed") + "</td>"
-        + "<td class='text-right'>" + format_currency(summary.total_billed || 0) + "</td>"
+        + "<td class='text-right'>" + frappe.format(summary.total_billed || 0, { fieldtype: "Currency" }) + "</td>"
         + "<td></td>"
         + "</tr><tr>"
         + "<td colspan='2'>" + __("Pending") + "</td>"
-        + "<td class='text-right'>" + format_currency(summary.total_pending || 0) + "</td>"
+        + "<td class='text-right'>" + frappe.format(summary.total_pending || 0, { fieldtype: "Currency" }) + "</td>"
         + "<td></td>"
         + "</tr></tfoot>"
         + "</table></div>";
 
     frappe.msgprint({ title: __("Contract Summary"), message: html, wide: true });
-}
+};
 
-function show_milestone_summary_dialog(project_name, summary) {
+frappe.nelito_finance.show_milestone_summary = function (project_name, summary) {
     let rows = "";
     (summary.tasks || []).forEach(function (t) {
         rows += "<tr>"
             + "<td>" + t.subject + "</td>"
             + "<td>" + (t.custom_phase || "") + "</td>"
             + "<td class='text-right'>" + (t.custom_billing_percentage || 0) + "%</td>"
-            + "<td class='text-right'>" + format_currency(t.custom_billing_amount || 0) + "</td>"
+            + "<td class='text-right'>" + frappe.format(t.custom_billing_amount || 0, { fieldtype: "Currency" }) + "</td>"
             + "<td>" + (t.custom_billing_status || "") + "</td>"
             + "<td>" + (t.status || "") + "</td>"
             + "</tr>";
@@ -155,11 +160,11 @@ function show_milestone_summary_dialog(project_name, summary) {
         + "<tbody>" + rows + "</tbody>"
         + "<tfoot><tr>"
         + "<td colspan='3'><strong>" + __("Billed / Pending") + "</strong></td>"
-        + "<td class='text-right'>" + format_currency(summary.total_billed || 0)
-            + " / " + format_currency(summary.total_pending || 0) + "</td>"
+        + "<td class='text-right'>" + frappe.format(summary.total_billed || 0, { fieldtype: "Currency" })
+            + " / " + frappe.format(summary.total_pending || 0, { fieldtype: "Currency" }) + "</td>"
         + "<td colspan='2'></td>"
         + "</tr></tfoot>"
         + "</table></div>";
 
     frappe.msgprint({ title: __("Milestone Summary — " + project_name), message: html, wide: true });
-}
+};

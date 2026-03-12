@@ -1,8 +1,8 @@
 import frappe
-from frappe.tests.utils import FrappeTestCase
+from frappe.tests import IntegrationTestCase
 
 
-class TestOrderReviewForm(FrappeTestCase):
+class TestOrderReviewForm(IntegrationTestCase):
     def setUp(self):
         # Ensure service items exist
         for code in ["SVC-LICENSE", "SVC-IMPLEMENTATION", "SVC-AMC", "SVC-TM", "SVC-TRAVEL"]:

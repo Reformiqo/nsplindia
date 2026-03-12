@@ -26,7 +26,6 @@ def daily_billing_sync():
 
         frappe.db.set_value("Task", task_data.name, "custom_billing_amount", new_amount)
 
-    frappe.db.commit()
     frappe.logger().info(f"Daily billing sync: updated {len(tasks)} tasks")
 
 
@@ -42,8 +41,7 @@ def yearly_amc_renewal():
         "Project",
         filters={
             "custom_revenue_category": "AMC",
-            "custom_warranty_end": ["<=", threshold_date],
-            "custom_warranty_end": [">=", today()],
+            "custom_warranty_end": ["between", [today(), threshold_date]],
             "status": ["not in", ["Completed", "Cancelled"]],
         },
         fields=["name", "custom_master_contract_id", "custom_parent_project",
@@ -77,5 +75,3 @@ def yearly_amc_renewal():
         renewal.insert()
 
         frappe.logger().info(f"AMC renewal project created: {renewal.name}")
-
-    frappe.db.commit()

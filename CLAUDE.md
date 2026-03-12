@@ -159,6 +159,28 @@ bench --site SITE set-config developer_mode 1
 - Keep commits focused — one logical change per commit
 - Do not force-push to shared branches
 
+## Frappe v16 Compatibility Rules
+
+These rules are **mandatory** for all code in this app:
+
+### Python
+- **Never call `frappe.db.commit()`** inside doc_events hooks or scheduled jobs — Frappe v16 raises an error. Frappe manages transactions automatically.
+- **Use `frappe.log_error(message=..., title=...)`** with keyword arguments — positional args are deprecated in v16.
+- **Test base class**: Use `from frappe.tests import IntegrationTestCase` (not `FrappeTestCase` which is removed in v16). Use `UnitTestCase` for pure logic tests without DB.
+- **No raw SQL in `frappe.get_all()` fields**: Use dict syntax for aggregates: `{"SUM": "field", "as": "alias"}` instead of `"sum(field) as alias"`.
+- **Default sort is `creation` not `modified`**: If you need `modified` ordering, specify it explicitly with `order_by`.
+- **`frappe.flags.in_test` is deprecated**: Use `frappe.in_test` instead.
+- **`has_permission` hooks must return explicit `True`**: Returning `None` or other truthy values no longer grants permission.
+
+### JavaScript
+- **v16 loads JS as IIFEs**: Never declare bare `function` at module level. Use `frappe.provide("frappe.nelito_finance")` and attach functions to the namespace.
+- **Use `frappe.format(value, {fieldtype: "Currency"})`** instead of bare `format_currency()` for reliable currency formatting.
+- **No global variable pollution**: If you must set globals, assign to `window.varName` explicitly.
+
+### DocType JSON
+- `is_submittable`, `istable`, `autoname` format patterns — all remain valid in v16.
+- Default sort changed to `creation` — set `sort_field` explicitly if needed.
+
 ## Conventions for AI Assistants
 
 - Read existing code before proposing changes
@@ -168,7 +190,7 @@ bench --site SITE set-config developer_mode 1
 - Avoid over-engineering; solve for what is asked, not hypothetical future needs
 - Do not commit files containing secrets (`.env`, credentials, API keys)
 - Always prefix custom fields with `custom_` per ERPNext v16 convention
-- Never use `frappe.db.commit()` inside DocType controllers
+- Never use `frappe.db.commit()` in doc_events, scheduled jobs, or controllers
 - Use `flags.ignore_permissions = True` when creating docs programmatically from hooks
 - Run `bench migrate` after modifying DocType JSON files
 - Run tests with `bench --site SITE run-tests --app nelito_finance` before committing

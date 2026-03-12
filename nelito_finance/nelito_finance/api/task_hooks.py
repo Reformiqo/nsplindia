@@ -30,8 +30,8 @@ def create_milestone_invoice(task):
     customer = get_customer_for_project(project)
     if not customer:
         frappe.log_error(
-            f"Cannot create invoice for task {task.name}: no customer found",
-            "Milestone Invoice Error",
+            message=f"Cannot create invoice for task {task.name}: no customer found",
+            title="Milestone Invoice Error",
         )
         return
 

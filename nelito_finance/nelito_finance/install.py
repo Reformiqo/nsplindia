@@ -5,7 +5,6 @@ from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 def after_install():
     """Create all 23 custom fields required by Nelito Finance."""
     create_custom_fields(get_custom_fields(), update=True)
-    frappe.db.commit()
     frappe.msgprint("Nelito Finance: Custom fields created successfully.")
 
 
